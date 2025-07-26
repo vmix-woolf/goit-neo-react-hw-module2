@@ -17,17 +17,35 @@ export default function App() {
         }))
     }
 
-    const totalFeedback = feedback.good + feedback.neutral + feedback.bad
+    const resetFeedback = () => {
+        setFeedback({ good: 0, neutral: 0, bad: 0 })
+    }
+
+    const { good, neutral, bad } = feedback
+    const totalFeedback = good + neutral + bad
+    const positiveFeedback = totalFeedback > 0
+        ? Math.round((good / totalFeedback) * 100)
+        : 0
 
     return (
         <div className="container">
             <h1>Sip Happens Café</h1>
             <p>Please leave your feedback about our service by selecting one of the options below.</p>
 
-            <Options onFeedback={updateFeedback} />
+            <Options
+                onFeedback={updateFeedback}
+                onReset={resetFeedback}
+                total={totalFeedback}
+            />
 
             {totalFeedback > 0 ? (
-                <Feedback values={feedback} total={totalFeedback} />
+                <Feedback
+                    good={good}
+                    neutral={neutral}
+                    bad={bad}
+                    total={totalFeedback}
+                    positive={positiveFeedback}
+                />
             ) : (
                 <Notification />
             )}
