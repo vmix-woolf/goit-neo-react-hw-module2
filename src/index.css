@@ -1,19 +1,14 @@
 @import 'modern-css-reset';
 
 :root {
-  /* Color */
   --color-bg: #ffffff;
   --color-text: #111111;
   --color-primary: #0070f3;
 
-  /* Fonts */
   --font-family-base: 'Inter', sans-serif;
-
-  /* Container */
   --container-width: 1280px;
   --container-padding: 1rem;
 
-  /* Font sizes */
   --font-size-base: 16px;
   --line-height-base: 1.5;
 }

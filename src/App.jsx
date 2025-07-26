@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Options from './components/Options/Options'
 import Feedback from './components/Feedback/Feedback'
 import Notification from './components/Notification/Notification'
 
+const STORAGE_KEY = 'feedback-data'
+
 export default function App() {
-    const [feedback, setFeedback] = useState({
-        good: 0,
-        neutral: 0,
-        bad: 0,
+    const [feedback, setFeedback] = useState(() => {
+        const stored = localStorage.getItem(STORAGE_KEY)
+        return stored
+            ? JSON.parse(stored)
+            : { good: 0, neutral: 0, bad: 0 }
     })
 
     const updateFeedback = (feedbackType) => {
@@ -20,6 +23,10 @@ export default function App() {
     const resetFeedback = () => {
         setFeedback({ good: 0, neutral: 0, bad: 0 })
     }
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(feedback))
+    }, [feedback])
 
     const { good, neutral, bad } = feedback
     const totalFeedback = good + neutral + bad
